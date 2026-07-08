@@ -157,6 +157,10 @@ project/
 - **Audit logging**: Log all access to sensitive operations and data
 
 ### Database System Roles (Supabase/PostgreSQL)
+*Platform-specific example — this document is otherwise tech-agnostic; apply
+this section only when the project uses Supabase or a similar managed
+PostgreSQL service.*
+
 When using managed database services like Supabase, system roles are managed by the service provider and must NEVER be modified by user code:
 
 **Reserved System Roles - NEVER TOUCH**:
@@ -245,8 +249,13 @@ Modifying system roles can cause service failures, authentication breakdowns, an
 ### Version Control
 - **Atomic commits**: Each commit represents one logical change
 - **Conventional commits**: Use consistent commit message format
-- **Branch strategy**: Use feature branches with descriptive names
-- **Code reviews**: All code must be reviewed before integration
+- **Trunk-based development (default)**: Commit directly to `main` in small
+  (~15 min) TDD-driven increments; every commit leaves `main` releasable.
+  Hide incomplete features via dark launch or branch-by-abstraction
+  (feature flags as last resort). Review happens via pairing or post-commit
+  review on trunk — not pre-merge PR gates. Only fall back to feature
+  branches if the project explicitly overrides this default (e.g. it lacks
+  fast CI, a strong test suite, or fast rollback).
 - **Linear history**: Maintain clean, understandable history
 
 ### Continuous Integration
